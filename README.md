@@ -1,4 +1,4 @@
-# 💀 HellTrackr
+# 💀 HellTrackr  ![GitHub all releases](https://img.shields.io/github/downloads/DANTE2076/helltrackr/total)
 
 > **Version:** 1.0.0  
 > **Author:** Helltrackr  
@@ -89,4 +89,4 @@ If this project helps you or makes you smile, send some SOL to support developme
 
 **SOL address:** `HELLg3wgaxNf7zewEbgxLXDqEVRd9ymwT5KgbxFuLxZn`
 
-![GitHub all releases](https://img.shields.io/github/downloads/DANTE2076/helltrackr/total)
+
