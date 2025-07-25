@@ -1,4 +1,3 @@
-# wallet_generator.py
 __version__ = "1.0.0"
 
 import time
@@ -20,16 +19,16 @@ leet_map = {
     'Z': ['Z', '2'],
 }
 
-# def show_banner():
-#    year = datetime.now().year
-#    print(f"""
-#=========================================
-#🪙 Helltrackr Wallet Generator v{__version__} ({year})
-#👨‍💻 Developer: @DANTE2076
-#🌐 GitHub: https://github.com/DANTE2076/helltrackr
-#💸 Donations (SOL): HeLLMHqXFPMwan3XBdLm5gFQ1beLegoV6jqrRwfLb1rm
-#=========================================
-#""")
+ def show_banner():
+    year = datetime.now().year
+    print(f"""
+=========================================
+🪙 Helltrackr Wallet Generator v{__version__} ({year})
+👨‍💻 Developer: @DANTE2076
+🌐 GitHub: https://github.com/DANTE2076/helltrackr
+💸 Donations (SOL): HeLLMHqXFPMwan3XBdLm5gFQ1beLegoV6jqrRwfLb1rm
+=========================================
+""")
 
 def generate_variations(prefix, use_leet):
     options = []
