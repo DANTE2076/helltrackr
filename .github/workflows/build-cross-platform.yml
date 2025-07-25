@@ -1,0 +1,110 @@
+name: Build and Release HellTrackr
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  get-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - id: extract
+        run: |
+          VERSION=$(grep '__version__' generador.py | cut -d '"' -f2)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+  build-windows:
+    needs: get-version
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build Windows EXE
+        run: |
+          $wordlistPath = (python -c "import bip_utils, os; print(os.path.join(os.path.dirname(bip_utils.__file__), 'bip', 'bip39', 'wordlist'))")
+          pyinstaller --onefile generador.py --name helltrackr.exe `
+            --add-data "$wordlistPath\\*.txt;bip_utils/bip/bip39/wordlist" `
+            --hidden-import=coincurve._libsecp256k1 `
+            --hidden-import=coincurve._cffi_backend `
+            --hidden-import=_cffi_backend
+
+      - name: Compress Windows binary
+        run: Compress-Archive -Path dist\helltrackr.exe -DestinationPath helltrackr-windows.zip
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: helltrackr-windows
+          path: helltrackr-windows.zip
+
+  build-linux:
+    needs: get-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build Linux binary
+        run: |
+          wordlist_path=$(python3 -c "import bip_utils, os; print(os.path.join(os.path.dirname(bip_utils.__file__), 'bip', 'bip39', 'wordlist'))")
+          pyinstaller --onefile generador.py --name helltrackr \
+            --add-data "$wordlist_path/*.txt:bip_utils/bip/bip39/wordlist" \
+            --hidden-import=coincurve._libsecp256k1 \
+            --hidden-import=coincurve._cffi_backend \
+            --hidden-import=_cffi_backend
+
+      - name: Compress Linux binary
+        run: tar -czvf helltrackr-linux.tar.gz -C dist helltrackr
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: helltrackr-linux
+          path: helltrackr-linux.tar.gz
+
+  release:
+    needs: [build-windows, build-linux, get-version]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ needs.get-version.outputs.version }}
+          files: |
+            artifacts/helltrackr-windows/helltrackr-windows.zip
+            artifacts/helltrackr-linux/helltrackr-linux.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
