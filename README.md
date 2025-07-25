@@ -2,7 +2,7 @@
 
 > **Version:** 1.0.0  
 > **Author:** Helltrackr  
-> **Donations (SOL):** `HeLLMHqXFPMwan3XBdLm5gFQ1beLegoV6jqrRwfLb1rm`
+> **Donations (SOL):** `HELLg3wgaxNf7zewEbgxLXDqEVRd9ymwT5KgbxFuLxZn`
 
 **HellTrackr** is a fast and efficient vanity address generator for the Solana blockchain. Customize your desired prefix, enable optional leetspeak substitutions, and mine stylish addresses in seconds.
 
@@ -73,7 +73,7 @@ pyinstaller --onefile generador.py --name helltrackr \
 - **Author:** Helltrackr  
 - **Version:** `1.0.0`  
 - **Solana Wallet (donations welcome):**  
-  `HeLLMHqXFPMwan3XBdLm5gFQ1beLegoV6jqrRwfLb1rm`
+  `HELLg3wgaxNf7zewEbgxLXDqEVRd9ymwT5KgbxFuLxZn`
 
 ---
 
@@ -87,4 +87,4 @@ MIT License — feel free to fork, use or contribute!
 
 If this project helps you or makes you smile, send some SOL to support development:
 
-**SOL address:** `HeLLMHqXFPMwan3XBdLm5gFQ1beLegoV6jqrRwfLb1rm`
+**SOL address:** `HELLg3wgaxNf7zewEbgxLXDqEVRd9ymwT5KgbxFuLxZn`
