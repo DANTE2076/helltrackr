@@ -15,7 +15,7 @@ jobs:
 
       - id: extract
         run: |
-          VERSION=$(python3 -c "import re; print(re.search(r'__version__ *= *[\"\\\']([^\"\\\']+)', open('generador.py').read()).group(1))")
+          VERSION=$(python3 -c 'import re; print(re.search(r"__version__\s*=\s*[\"'\"']([^\"'\"']+)[\"'\"']", open("generador.py").read()).group(1))')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           
   build-windows:
