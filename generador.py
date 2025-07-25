@@ -7,6 +7,18 @@ from datetime import datetime
 from bip_utils import Bip39SeedGenerator, Bip39MnemonicGenerator, Bip39WordsNum
 from nacl.signing import SigningKey
 
+
+def show_banner():
+    year = datetime.now().year
+    print(f"""
+=========================================
+🪙 Helltrackr Wallet Generator v{__version__} ({year})
+👨‍💻 Developer: @DANTE2076
+🌐 GitHub: https://github.com/DANTE2076/helltrackr
+💸 Donations (SOL): HeLLMHqXFPMwan3XBdLm5gFQ1beLegoV6jqrRwfLb1rm
+=========================================
+""")
+
 leet_map = {
     'A': ['A', '4'],
     'E': ['E', '3'],
@@ -43,7 +55,7 @@ def generate_wallet():
     )
 
 if __name__ == "__main__":
-
+    show_banner()
     base_prefix = input("🆔 What prefix are you looking for? (e.g., HOOT, HELLTRACKR): ").strip().upper()
     if not base_prefix.isalnum():
         print("❌ Invalid prefix. Must be alphanumeric.")
