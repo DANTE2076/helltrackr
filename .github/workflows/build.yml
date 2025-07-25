@@ -1,30 +1,36 @@
-name: build-windows
+name: Build Windows Executable
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  build:
+  build-windows:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repo
+      uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.11
+        python-version: '3.10'
 
     - name: Install dependencies
-      run: |
-        pip install pyinstaller bip_utils coincurve
+      run: pip install -r requirements.txt pyinstaller
 
     - name: Build executable
-      run: pyinstaller --onefile generador.py --name helltrackr --hidden-import=coincurve._libsecp256k1 --hidden-import=coincurve._cffi_backend --collect-submodules coincurve --hidden-import=base58
+      run: |
+        pyinstaller --onefile generador.py --name helltrackr `
+          --hidden-import=base58 `
+          --hidden-import=coincurve._libsecp256k1 `
+          --hidden-import=coincurve._cffi_backend `
+          --collect-submodules coincurve
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: helltrackr
+        name: helltrackr.exe
         path: dist/helltrackr.exe
