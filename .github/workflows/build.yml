@@ -1,32 +1,34 @@
-name: Build EXE
+name: build-windows
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  build-windows:
+  build:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.10
+        python-version: 3.11
 
     - name: Install dependencies
       run: |
-        pip install pyinstaller bip_utils pynacl base58
+        pip install pyinstaller bip_utils coincurve
 
-    - name: Build EXE
+    - name: Build executable
       run: |
-        pyinstaller --onefile --name helltrackr generador.py
+        pyinstaller --onefile generador.py --name helltrackr ^
+          --hidden-import=coincurve._libsecp256k1 ^
+          --hidden-import=coincurve._cffi_backend ^
+          --collect-submodules coincurve
 
-    - name: Upload EXE
+    - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: helltrackr-exe
+        name: helltrackr
         path: dist/helltrackr.exe
