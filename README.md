@@ -88,3 +88,5 @@ MIT License — feel free to fork, use or contribute!
 If this project helps you or makes you smile, send some SOL to support development:
 
 **SOL address:** `HELLg3wgaxNf7zewEbgxLXDqEVRd9ymwT5KgbxFuLxZn`
+
+![GitHub all releases](https://img.shields.io/github/downloads/DANTE2076/helltrackr/total)
