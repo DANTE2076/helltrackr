@@ -29,6 +29,7 @@ jobs:
           pyinstaller --onefile generador.py --name helltrackr `
             --add-data "$wordlistPath\\*.txt;bip_utils/bip/bip39/wordlist" `
             --hidden-import=coincurve._libsecp256k1 `
+            --hidden-import=coincurve._cffi_backend `
             --hidden-import=_cffi_backend
 
       - name: Upload artifact
