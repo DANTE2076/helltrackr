@@ -13,10 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-    - id: extract
-      run: |
-        VERSION=$(python3 -c 'import ast; print(ast.literal_eval([line.split("=")[1].strip() for line in open("generador.py") if line.startswith("__version__")][0]))')
-        echo "version=$VERSION" >> $GITHUB_OUTPUT
+      - id: extract
+        run: |
+          VERSION=$(python3 -c 'import ast; print(ast.literal_eval([line.split("=")[1].strip() for line in open("generador.py") if line.startswith("__version__")][0]))')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
           
   build-windows:
