@@ -21,11 +21,7 @@ jobs:
         pip install pyinstaller bip_utils coincurve
 
     - name: Build executable
-      run: |
-        pyinstaller --onefile generador.py --name helltrackr ^
-          --hidden-import=coincurve._libsecp256k1 ^
-          --hidden-import=coincurve._cffi_backend ^
-          --collect-submodules coincurve
+      run: pyinstaller --onefile generador.py --name helltrackr --hidden-import=coincurve._libsecp256k1 --hidden-import=coincurve._cffi_backend --collect-submodules coincurve
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
