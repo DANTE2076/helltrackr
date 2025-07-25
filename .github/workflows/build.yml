@@ -1,8 +1,8 @@
-name: Build Windows Executable
+name: Build EXE
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -16,21 +16,26 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'
+        python-version: '3.11'
 
     - name: Install dependencies
-      run: pip install -r requirements.txt pyinstaller
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller
+        pip install -r requirements.txt
 
     - name: Build executable
       run: |
+        $wordlist = (python -c "import bip_utils, os; print(os.path.join(os.path.dirname(bip_utils.__file__), 'bip', 'bip39', 'wordlist', 'english.txt'))")
         pyinstaller --onefile generador.py --name helltrackr `
           --hidden-import=base58 `
           --hidden-import=coincurve._libsecp256k1 `
           --hidden-import=coincurve._cffi_backend `
-          --collect-submodules coincurve
+          --collect-submodules coincurve `
+          --add-data "$wordlist;bip_utils/bip/bip39/wordlist"
 
-    - name: Upload artifact
+    - name: Upload EXE
       uses: actions/upload-artifact@v4
       with:
-        name: helltrackr.exe
+        name: helltrackr
         path: dist/helltrackr.exe
