@@ -38,13 +38,23 @@ jobs:
           version=$(grep -oP '__version__\s*=\s*"\K[^"]+' generador.py)
           echo "version=$version" >> $GITHUB_OUTPUT
 
-      - name: Upload to GitHub Releases
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: v${{ steps.get_version.outputs.version }}
-          files: dist/helltrackr_linux
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload to release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ env.VERSION }}
+        files: dist/helltrackr
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      
+ 
+//      - name: Upload to GitHub Releases
+//        uses: softprops/action-gh-release@v1
+//        with:
+//          tag_name: v${{ steps.get_version.outputs.version }}
+//          files: dist/helltrackr_linux
+//        env:
+//          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
         with:
           name: helltrackr-exe
