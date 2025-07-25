@@ -55,7 +55,7 @@ def generate_wallet():
     )
 
 if __name__ == "__main__":
-    show_banner()
+#    show_banner()
 
     base_prefix = input("🆔 What prefix are you looking for? (e.g., HOOT, HELLTRACKR): ").strip().upper()
     if not base_prefix.isalnum():
