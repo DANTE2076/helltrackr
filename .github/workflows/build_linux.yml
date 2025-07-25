@@ -1,4 +1,4 @@
-        name: Build Linux EXE
+name: Build Linux Standalone
 
 on:
   push:
@@ -23,39 +23,25 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
+      - name: Extract version from Python file
+        id: get_version
+        run: |
+          VERSION=$(grep '__version__' generador.py | cut -d '"' -f2)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: Build executable
         run: |
           wordlist_path=$(python3 -c "import bip_utils, os; print(os.path.join(os.path.dirname(bip_utils.__file__), 'bip', 'bip39', 'wordlist'))")
-          pyinstaller --onefile generador.py --name helltrackr_linux \
+          pyinstaller --onefile generador.py --name helltrackr \
             --add-data "$wordlist_path/*.txt:bip_utils/bip/bip39/wordlist" \
             --hidden-import=coincurve._libsecp256k1 \
             --hidden-import=coincurve._cffi_backend \
             --hidden-import=_cffi_backend
 
-      - name: Get version from generador.py
-        id: get_version
-        run: |
-          version=$(grep -oP '__version__\s*=\s*"\K[^"]+' generador.py)
-          echo "version=$version" >> $GITHUB_OUTPUT
-
-    - name: Upload to release
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: v${{ env.VERSION }}
-        files: dist/helltrackr
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      
- 
-//      - name: Upload to GitHub Releases
-//        uses: softprops/action-gh-release@v1
-//        with:
-//          tag_name: v${{ steps.get_version.outputs.version }}
-//          files: dist/helltrackr_linux
-//        env:
-//          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
         with:
-          name: helltrackr-exe
-          path: dist/helltrackr.exe
+          tag_name: v${{ env.VERSION }}
+          files: dist/helltrackr
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
