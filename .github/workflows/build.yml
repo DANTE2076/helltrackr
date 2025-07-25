@@ -26,7 +26,10 @@ jobs:
     - name: Build executable
       run: |
         $wordlistPath = (python -c "import bip_utils, os; print(os.path.join(os.path.dirname(bip_utils.__file__), 'bip', 'bip39', 'wordlist'))")
-        pyinstaller --onefile generador.py --name helltrackr --add-data "$wordlistPath\\*.txt;bip_utils/bip/bip39/wordlist"
+        pyinstaller --onefile generador.py --name helltrackr `
+          --add-data "$wordlistPath\\*.txt;bip_utils/bip/bip39/wordlist" `
+          --hidden-import coincurve._libsecp256k1 `
+          --hidden-import _cffi_backend
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
