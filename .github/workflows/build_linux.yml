@@ -1,0 +1,51 @@
+        name: Build Linux EXE
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build executable
+        run: |
+          wordlist_path=$(python3 -c "import bip_utils, os; print(os.path.join(os.path.dirname(bip_utils.__file__), 'bip', 'bip39', 'wordlist'))")
+          pyinstaller --onefile generador.py --name helltrackr_linux \
+            --add-data "$wordlist_path/*.txt:bip_utils/bip/bip39/wordlist" \
+            --hidden-import=coincurve._libsecp256k1 \
+            --hidden-import=coincurve._cffi_backend \
+            --hidden-import=_cffi_backend
+
+      - name: Get version from generador.py
+        id: get_version
+        run: |
+          version=$(grep -oP '__version__\s*=\s*"\K[^"]+' generador.py)
+          echo "version=$version" >> $GITHUB_OUTPUT
+
+      - name: Upload to GitHub Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          files: dist/helltrackr_linux
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+        with:
+          name: helltrackr-exe
+          path: dist/helltrackr.exe
