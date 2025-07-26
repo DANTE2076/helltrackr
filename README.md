@@ -43,7 +43,7 @@ wallets_dante_5.txt
 Each line in the file includes:
 
 ```
-<PublicKey> | <PrivateKey32> | <PrivKey64> | <Mnemonic>
+<PublicKey> | <PrivateKey32> | <PrivateKey64> | <Mnemonic>
 ```
 
 ---
