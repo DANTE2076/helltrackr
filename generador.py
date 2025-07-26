@@ -7,7 +7,6 @@ from datetime import datetime
 from bip_utils import Bip39SeedGenerator, Bip39MnemonicGenerator, Bip39WordsNum
 from nacl.signing import SigningKey
 
-
 def show_banner():
     year = datetime.now().year
     print(f"""
@@ -16,6 +15,11 @@ def show_banner():
 👨‍💻 Developer: @DANTE2076
 🌐 GitHub: https://github.com/DANTE2076/helltrackr
 💸 Donations (SOL): HeLLMHqXFPMwan3XBdLm5gFQ1beLegoV6jqrRwfLb1rm
+=========================================
+⚠️  IMPORTANT: Check the generated .txt files.
+    They contain sensitive data (private keys + mnemonics).
+    Store them securely. Anyone with access to these files
+    can fully control the corresponding wallets.
 =========================================
 """)
 
