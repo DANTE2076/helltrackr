@@ -1,4 +1,4 @@
-# 💀 HellTrackr  ![GitHub all releases](https://img.shields.io/github/downloads/DANTE2076/helltrackr/total)
+# 💀 HellTrackr
 
 > **Version:** 1.0.0  
 > **Author:** Helltrackr  
