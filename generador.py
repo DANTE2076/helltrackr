@@ -3,12 +3,21 @@ __version__ = "1.0.0"
 import time
 import base58
 import itertools
+import os
+import sys
 from datetime import datetime
 from bip_utils import Bip39SeedGenerator, Bip39MnemonicGenerator, Bip39WordsNum
 from nacl.signing import SigningKey
 
+def get_output_directory():
+    if getattr(sys, 'frozen', False):
+        return os.path.dirname(sys.executable)
+    else:
+        return os.getcwd()
+        
 def show_banner():
     year = datetime.now().year
+    output_dir = get_output_directory()
     print(f"""
 =========================================
 🪙 Helltrackr Wallet Generator v{__version__} ({year})
@@ -16,6 +25,9 @@ def show_banner():
 🌐 GitHub: https://github.com/DANTE2076/helltrackr
 💸 Donations (SOL): HeLLMHqXFPMwan3XBdLm5gFQ1beLegoV6jqrRwfLb1rm
 =========================================
+📂 Wallets will be saved in:
+   {output_dir}
+   
 ⚠️  IMPORTANT: Check the generated .txt files.
     They contain sensitive data (private keys + mnemonics).
     Store them securely. Anyone with access to these files
