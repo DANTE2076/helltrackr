@@ -1,6 +1,6 @@
 # 💀 HellTrackr
 
-> **Version:** 1.0.0  
+> **Version:** 1.0.2  
 > **Author:** Helltrackr  
 > **Donations (SOL):** `HELLg3wgaxNf7zewEbgxLXDqEVRd9ymwT5KgbxFuLxZn`
 
