@@ -116,7 +116,7 @@ if __name__ == "__main__":
                     print(f"💾 Saved to: wallets_{base_prefix.lower()}_{i}.txt")
 
                     with open(f"wallets_{base_prefix.lower()}_{i}.txt", "a") as f:
-                        f.write(f"{pub} | {priv32} | {mnemonic}\n")
+                        f.write(f"{pub} | {priv32} | {priv64} | {mnemonic}\n")
                 break
 
         if attempts % 10000 == 0:
